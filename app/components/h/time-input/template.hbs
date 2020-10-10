@@ -1,0 +1,50 @@
+<div>
+  <label for="hours">
+    Hours
+  </label>
+  <input
+    class={{if this.focussed "has-focus"}}
+    type="text"
+    value={{this.statechart.state.context.hours}}
+    {{on "focus" this.focus}}
+    {{on "focus" this.focusHours}}
+    {{on "keydown" this.keyDown}}
+    {{on-key "ArrowUp" this.up}}
+    {{on-key "ArrowDown" this.down}}
+    {{on-key "Tab" this.tab}}
+    {{on "blur" this.blur}}
+    {{on "input" this.input}}
+  />
+
+  <label for="minutes">
+    Minutes
+  </label>
+  <input
+    class={{if this.focussed "has-focus"}}
+    type="text"
+    value={{this.statechart.state.context.minutes}}
+    {{on "focus" this.focus}}
+    {{on "focus" this.focusMinutes}}
+    {{on-key "ArrowUp" this.up}}
+    {{on-key "ArrowDown" this.down}}
+    {{on-key "Tab" this.tab}}
+    {{on "keydown" this.keyDown}}
+    {{on "blur" this.blur}}
+    {{on "input" this.input}}
+  />
+
+  <label for="meridiem">
+    AM/PM
+  </label>
+  <input
+    class={{if this.focussed "has-focus"}}
+    type="text"
+    value={{this.statechart.state.context.meridiem}}
+    {{on "focus" this.focus}}
+    {{on "focus" this.focusMeridiem}}
+    {{on-key "ArrowUp" (fn this.statechart.send "TOGGLE")}}
+    {{on-key "ArrowDown" (fn this.statechart.send "TOGGLE")}}
+    {{on "blur" this.blur}}
+    {{on "input" this.input}}
+  />
+</div>
