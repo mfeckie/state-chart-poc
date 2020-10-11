@@ -16,18 +16,20 @@ const keysToAllow = ["Tab", "Shift", "ArrowLeft", "ArrowRight", "Backspace"];
 const MINUTES = [...Array(60).keys()];
 
 export default class HDateInput extends Component<HTimeInputArgs> {
-  @use statechart = useMachine(TimeMachine)
-    .withContext({
-      hours: this.args.hours,
-      minutes: this.args.minutes,
-      meridiem: this.args.meridiem,
-    })
-    .withConfig({
-      actions: {
-        onChange: this.onChange,
-      },
-    })
-    .update(({ restart }) => restart());
+  @use statechart = interpreterFor(
+    useMachine(TimeMachine)
+      .withContext({
+        hours: this.args.hours,
+        minutes: this.args.minutes,
+        meridiem: this.args.meridiem,
+      })
+      .withConfig({
+        actions: {
+          onChange: this.onChange,
+        },
+      })
+      .update(({ restart }) => restart())
+  );
 
   @matchesState("meridiem.focussed") meridiemFocussed!: boolean;
   @matchesState("minutes.focussed") minutesFocussed!: boolean;
@@ -44,62 +46,62 @@ export default class HDateInput extends Component<HTimeInputArgs> {
 
   @action
   up() {
-    interpreterFor(this.statechart).send("INCREMENT");
+    this.statechart.send({ type: "INCREMENT" });
   }
 
   @action
   down() {
-    interpreterFor(this.statechart).send("DECREMENT");
+    this.statechart.send({ type: "DECREMENT" });
   }
 
   @action
   focus() {
-    interpreterFor(this.statechart).send("FOCUS");
+    this.statechart.send({ type: "FOCUS" });
   }
 
   @action
   focusHours() {
-    interpreterFor(this.statechart).send("HOURS");
+    this.statechart.send({ type: "HOURS" });
   }
 
   @action
   focusMinutes() {
-    interpreterFor(this.statechart).send("MINUTES");
+    this.statechart.send({ type: "MINUTES" });
   }
 
   @action
   focusMeridiem() {
-    interpreterFor(this.statechart).send("MERIDIEM");
+    this.statechart.send({ type: "MERIDIEM" });
   }
 
   @action
   blur() {
-    interpreterFor(this.statechart).send("BLUR");
+    this.statechart.send({ type: "BLUR" });
   }
 
   @action
   tab() {
-    interpreterFor(this.statechart).send("TAB");
+    this.statechart.send({ type: "TAB" });
   }
 
   @action
   validate() {
-    interpreterFor(this.statechart).send("VALIDATE");
+    this.statechart.send({ type: "VALIDATE" });
   }
 
   @action
   dropdown() {
-    interpreterFor(this.statechart).send({ type: "TOGGLE_DROPDOWN" });
+    this.statechart.send({ type: "TOGGLE_DROPDOWN" });
   }
 
   @action
   select(input: string) {
-    interpreterFor(this.statechart).send({ type: "SELECT", input });
+    this.statechart.send({ type: "SELECT", input });
   }
 
   @action
   selectMeridiem(input: Meridiem) {
-    interpreterFor(this.statechart).send({ type: "SELECT_MERIDIEM", input });
+    this.statechart.send({ type: "SELECT_MERIDIEM", input });
   }
 
   @action
@@ -125,14 +127,12 @@ export default class HDateInput extends Component<HTimeInputArgs> {
 
   @action
   input(event: InputEvent) {
-    interpreterFor(this.statechart).send("USER_INPUT", {
+    this.statechart.send("USER_INPUT", {
       input: (event?.target as HTMLInputElement)?.value,
     });
   }
 
   get paddedMinutes() {
-    return interpreterFor(this.statechart)
-      .state.context.minutes?.toString()
-      .padStart(2, "0");
+    return this.statechart.state.context.minutes?.toString().padStart(2, "0");
   }
 }
