@@ -1,6 +1,7 @@
 "use strict";
 
 const EmberApp = require("ember-cli/lib/broccoli/ember-app");
+const env = EmberApp.env();
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
@@ -8,6 +9,10 @@ module.exports = function (defaults) {
       compile: {
         plugins: [require("tailwindcss")],
       },
+    },
+    fingerprint: {
+      enabled: env === "production",
+      prepend: "https://mfeckie.github.io/state-chart-poc",
     },
   });
 
