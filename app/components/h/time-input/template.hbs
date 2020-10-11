@@ -24,7 +24,7 @@
     />
     {{#if this.dropdownHoursFocussed}}
       <div
-        class="mt-1 w-10 z-10 h-48 overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
+        class="mt-1 w-10 z-10 h-48 overflow-y-scroll border bg-gray-200 flex flex-col shadow-xl absolute"
       >
         {{#each this.hourOptions as |hour|}}
           <button
@@ -58,7 +58,7 @@
     />
     {{#if this.dropdownMinutesFocussed}}
       <div
-        class="mt-1 w-10 z-10 h-48 overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
+        class="mt-1 w-10 z-10 h-48 overflow-y-scroll border bg-gray-200 flex flex-col shadow-xl absolute"
       >
         {{#each this.minuteOptions as |minute|}}
           <button type="button" {{on "click" (fn this.select minute)}}>
@@ -84,7 +84,7 @@
     />
     {{#if this.dropdownMeridiemFocussed}}
       <div
-        class="mt-1 w-10 z-10 h-auto overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
+        class="mt-1 w-10 z-10 h-auto overflow-y-scroll border bg-gray-200 flex flex-col shadow-xl absolute"
       >
         <button type="button" {{on "click" (fn this.selectMeridiem "AM")}}>
           AM
