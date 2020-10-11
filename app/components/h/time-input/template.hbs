@@ -1,4 +1,12 @@
 <div class="flex" ...attributes>
+  {{#if this.dropdownOpen}}
+    <button
+      type="button"
+      class="fixed h-full w-full inset-0"
+      {{on "click" (fn this.statechart.send "TOGGLE_DROPDOWN")}}
+      {{did-insert this.escapeListener}}
+    ></button>
+  {{/if}}
   <div class="relative">
     <input
       placeholder="HH"
@@ -15,11 +23,6 @@
       {{on "input" this.input}}
     />
     {{#if this.dropdownHoursFocussed}}
-      <button
-        type="button"
-        class="fixed h-full w-full inset-0"
-        {{on "click" (fn this.statechart.send "TOGGLE_DROPDOWN")}}
-      ></button>
       <div
         class="mt-1 w-10 z-10 h-48 overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
       >
@@ -54,11 +57,6 @@
       {{on "input" this.input}}
     />
     {{#if this.dropdownMinutesFocussed}}
-      <button
-        type="button"
-        class="fixed h-full w-full inset-0"
-        {{on "click" (fn this.statechart.send "TOGGLE_DROPDOWN")}}
-      ></button>
       <div
         class="mt-1 w-10 z-10 h-48 overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
       >
@@ -85,11 +83,6 @@
       {{on "input" this.input}}
     />
     {{#if this.dropdownMeridiemFocussed}}
-      <button
-        type="button"
-        class="fixed h-full w-full inset-0"
-        {{on "click" (fn this.statechart.send "TOGGLE_DROPDOWN")}}
-      ></button>
       <div
         class="mt-1 w-10 z-10 h-auto overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
       >

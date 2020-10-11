@@ -144,6 +144,19 @@ export default class HDateInput extends Component<HTimeInputArgs> {
     });
   }
 
+  @action
+  escapeListener() {
+    const escapeListener = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        this.statechart.send("TOGGLE_DROPDOWN");
+      }
+    };
+
+    document.addEventListener("keyup", escapeListener);
+
+    return () => document.removeEventListener("keyup", escapeListener);
+  }
+
   get paddedMinutes() {
     return this.statechart.state.context.minutes?.toString().padStart(2, "0");
   }
