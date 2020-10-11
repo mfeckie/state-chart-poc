@@ -4,7 +4,7 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'state-chart',
     environment,
-    rootURL: environment === 'production' ? 'https://mfeckie.github.io/state-chart-poc/' : '/',
+    rootURL: environment === 'production' ? '/state-chart-poc/' : '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
