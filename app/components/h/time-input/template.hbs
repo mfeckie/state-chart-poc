@@ -1,79 +1,109 @@
-<div ...attributes>
-  <input
-    placeholder="HH"
-    class="{{if this.hoursFocussed "has-focus"}} w-10 border text-center"
-    type="text"
-    value={{this.statechart.state.context.hours}}
-    {{on "focus" this.focus}}
-    {{on "focus" this.focusHours}}
-    {{on "keydown" this.keyDown}}
-    {{on-key "ArrowUp" this.up}}
-    {{on-key "ArrowDown" this.down}}
-    {{on-key "Tab" this.tab}}
-    {{on "blur" this.blur}}
-    {{on "input" this.input}}
-  />
-  {{#if this.dropdownHoursFocussed}}
-    <div class="dropdown">
-      {{#each this.hourOptions as |hour|}}
-        <button type="button" {{on "click" (fn this.select hour)}}>
-          {{hour}}
-        </button>
-      {{/each}}
-    </div>
-  {{/if}}
+<div class="flex" ...attributes>
+  <div class="relative">
+    <input
+      placeholder="HH"
+      class="{{if this.hoursFocussed "has-focus"}} w-10 border text-center"
+      type="text"
+      value={{this.statechart.state.context.hours}}
+      {{on "focus" this.focus}}
+      {{on "focus" this.focusHours}}
+      {{on "keydown" this.keyDown}}
+      {{on-key "ArrowUp" this.up}}
+      {{on-key "ArrowDown" this.down}}
+      {{on-key "Tab" this.tab}}
+      {{on "blur" this.blur}}
+      {{on "input" this.input}}
+    />
+    {{#if this.dropdownHoursFocussed}}
+      <button
+        type="button"
+        class="fixed h-full w-full inset-0"
+        {{on "click" (fn this.statechart.send "TOGGLE_DROPDOWN")}}
+      ></button>
+      <div
+        class="mt-1 w-10 z-10 h-48 overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
+      >
+        {{#each this.hourOptions as |hour|}}
+          <button
+            class="block hover:bg-blue-300"
+            type="button"
+            {{on "click" (fn this.select hour)}}
+          >
+            {{hour}}
+          </button>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
   <span class="px-1">
     :
   </span>
-  <input
-    placeholder="MM"
-    class="{{if this.minutesFocussed "has-focus"}} w-10 border text-center"
-    type="text"
-    value={{this.paddedMinutes}}
-    {{on "focus" this.focus}}
-    {{on "focus" this.focusMinutes}}
-    {{on-key "ArrowUp" this.up}}
-    {{on-key "ArrowDown" this.down}}
-    {{on-key "Tab" this.tab}}
-    {{on "keydown" this.keyDown}}
-    {{on "blur" this.blur}}
-    {{on "input" this.input}}
-  />
-  {{#if this.dropdownMinutesFocussed}}
-    <div class="dropdown">
-      {{#each this.minuteOptions as |minute|}}
-        <button type="button" {{on "click" (fn this.select minute)}}>
-          {{minute}}
+  <div class="relative">
+    <input
+      placeholder="MM"
+      class="{{if this.minutesFocussed "has-focus"}} w-10 border text-center"
+      type="text"
+      value={{this.paddedMinutes}}
+      {{on "focus" this.focus}}
+      {{on "focus" this.focusMinutes}}
+      {{on-key "ArrowUp" this.up}}
+      {{on-key "ArrowDown" this.down}}
+      {{on-key "Tab" this.tab}}
+      {{on "keydown" this.keyDown}}
+      {{on "blur" this.blur}}
+      {{on "input" this.input}}
+    />
+    {{#if this.dropdownMinutesFocussed}}
+      <button
+        type="button"
+        class="fixed h-full w-full inset-0"
+        {{on "click" (fn this.statechart.send "TOGGLE_DROPDOWN")}}
+      ></button>
+      <div
+        class="mt-1 w-10 z-10 h-48 overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
+      >
+        {{#each this.minuteOptions as |minute|}}
+          <button type="button" {{on "click" (fn this.select minute)}}>
+            {{minute}}
+          </button>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+  <span class="mr-2"></span>
+  <div class="relative">
+    <input
+      placeholder="AM/PM"
+      class="{{if this.meridiemFocussed "has-focus"}} w-10 border text-center"
+      type="text"
+      value={{this.statechart.state.context.meridiem}}
+      {{on "focus" this.focus}}
+      {{on "focus" this.focusMeridiem}}
+      {{on-key "ArrowUp" (fn this.statechart.send "TOGGLE")}}
+      {{on-key "ArrowDown" (fn this.statechart.send "TOGGLE")}}
+      {{on "blur" this.blur}}
+      {{on "input" this.input}}
+    />
+    {{#if this.dropdownMeridiemFocussed}}
+      <button
+        type="button"
+        class="fixed h-full w-full inset-0"
+        {{on "click" (fn this.statechart.send "TOGGLE_DROPDOWN")}}
+      ></button>
+      <div
+        class="mt-1 w-10 z-10 h-auto overflow-y-scroll bg-gray-100 flex flex-col shadow-md absolute"
+      >
+        <button type="button" {{on "click" (fn this.selectMeridiem "AM")}}>
+          AM
         </button>
-      {{/each}}
-    </div>
-  {{/if}}
-  <span>
-  </span>
-  <input
-    placeholder="AM/PM"
-    class="{{if this.meridiemFocussed "has-focus"}} w-10 border text-center"
-    type="text"
-    value={{this.statechart.state.context.meridiem}}
-    {{on "focus" this.focus}}
-    {{on "focus" this.focusMeridiem}}
-    {{on-key "ArrowUp" (fn this.statechart.send "TOGGLE")}}
-    {{on-key "ArrowDown" (fn this.statechart.send "TOGGLE")}}
-    {{on "blur" this.blur}}
-    {{on "input" this.input}}
-  />
-  {{#if this.dropdownMeridiemFocussed}}
-    <div class="dropdown">
-      <button type="button" {{on "click" (fn this.selectMeridiem "AM")}}>
-        AM
-      </button>
-      <button type="button" {{on "click" (fn this.selectMeridiem "PM")}}>
-        PM
-      </button>
-    </div>
-  {{/if}}
+        <button type="button" {{on "click" (fn this.selectMeridiem "PM")}}>
+          PM
+        </button>
+      </div>
+    {{/if}}
+  </div>
   <button
-    class="bg-blue-500 text-white py-2 px-4"
+    class="bg-blue-500 text-white px-2 ml-2"
     type="button"
     {{on "click" this.dropdown}}
   >

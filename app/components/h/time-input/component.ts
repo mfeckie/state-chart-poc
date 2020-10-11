@@ -121,9 +121,7 @@ export default class HDateInput extends Component<HTimeInputArgs> {
   @action
   onChange({ hours, minutes, meridiem }: TimeContext) {
     this.args.onChange(
-      `${hours.toString().padStart(2, "0")}:${minutes
-        .toString()
-        .padStart(2, "0")} ${meridiem}`
+      `${hours}:${minutes.toString().padStart(2, "0")} ${meridiem}`
     );
   }
 
