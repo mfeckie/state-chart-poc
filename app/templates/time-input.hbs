@@ -4,7 +4,8 @@
   </h2>
   <div>
     <div class="container">
-      <XStateInspector />
+      {{!-- Uncomment the line below if running locally to show the inspectors tools for XState --}}
+      {{!-- <XStateInspector /> --}}
       <div class="w-1/2">
         <H::TimeInput @time={{this.time}} @onChange={{fn (mut this.time)}} />
       </div>
