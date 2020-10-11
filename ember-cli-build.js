@@ -12,7 +12,7 @@ module.exports = function (defaults) {
     },
     fingerprint: {
       enabled: env === "production",
-      prepend: "https://mfeckie.github.io/state-chart-poc",
+      prepend: "https://mfeckie.github.io/state-chart-poc/",
     },
   });
 
