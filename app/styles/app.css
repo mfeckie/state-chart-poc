@@ -4,6 +4,7 @@ main {
   flex-direction: column;
 }
 
-input.has-focus {
-  
+.has-focus {
+  border: solid 2px pink;
+  outline: none;
 }

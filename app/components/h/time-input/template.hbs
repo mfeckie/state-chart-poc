@@ -16,6 +16,15 @@
     {{on "blur" this.blur}}
     {{on "input" this.input}}
   />
+  {{#if this.dropdownHoursFocussed}}
+    <div class="dropdown">
+      {{#each this.hours as |hour|}}
+        <button type="button" {{on "click" (fn this.select hour)}}>
+          {{hour}}
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
   <span>
     :
   </span>
@@ -33,6 +42,15 @@
     {{on "blur" this.blur}}
     {{on "input" this.input}}
   />
+  {{#if this.dropdownMinutesFocussed}}
+    <div class="dropdown">
+      {{#each this.minutes as |minute|}}
+        <button type="button" {{on "click" (fn this.select minute)}}>
+          {{minute}}
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
   <span>
   </span>
   <input
@@ -47,7 +65,17 @@
     {{on "blur" this.blur}}
     {{on "input" this.input}}
   />
-  <button type="button">
+  {{#if this.dropdownMeridiemFocussed}}
+    <div class="dropdown">
+      <button type="button" {{on "click" (fn this.selectMeridiem "AM")}}>
+        AM
+      </button>
+      <button type="button" {{on "click" (fn this.selectMeridiem "PM")}}>
+        PM
+      </button>
+    </div>
+  {{/if}}
+  <button type="button" {{on "click" this.dropdown}}>
     Dropdown
   </button>
 </div>

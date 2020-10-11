@@ -27,6 +27,13 @@ interface TimeStateSchema extends StateSchema {
         focussed: StateSchema;
       };
     };
+    dropdown: {
+      states: {
+        hours: StateSchema;
+        minutes: StateSchema;
+        meridiem: StateSchema;
+      };
+    };
   };
 }
 
@@ -42,7 +49,11 @@ export type Events =
   | { type: "INCREMENT" }
   | { type: "DECREMENT" }
   | { type: "TOGGLE" }
-  | { type: "VALIDATE" };
+  | { type: "VALIDATE" }
+  | { type: "DROPDOWN" }
+  | { type: "SELECT"; input: string }
+  | { type: "SELECT_MERIDIEM"; input: Meridiem }
+  | { type: "TOGGLE_DROPDOWN" };
 
 export interface TimeContext {
   hours: number | "";
@@ -78,6 +89,7 @@ export const TimeMachine = Machine<TimeContext, TimeStateSchema, Events>(
       idle: {
         on: {
           FOCUS: "focussed",
+          TOGGLE_DROPDOWN: "dropdown",
         },
       },
       focussed: {
@@ -95,7 +107,54 @@ export const TimeMachine = Machine<TimeContext, TimeStateSchema, Events>(
           TAB: "visited",
           HOURS: "hours",
           MINUTES: "minutes",
-          MERIDIEM: "meridiem"
+          MERIDIEM: "meridiem",
+          TOGGLE_DROPDOWN: "dropdown",
+        },
+      },
+      dropdown: {
+        initial: "hours",
+        on: {
+          MINUTES: "minutes",
+          DONE: "visited",
+          TOGGLE_DROPDOWN: "visited",
+        },
+        states: {
+          hours: {
+            on: {
+              SELECT: {
+                actions: [
+                  assign({
+                    hours: (_, { input }) => Number(input),
+                  }),
+                ],
+                target: "minutes",
+              },
+            },
+          },
+          minutes: {
+            on: {
+              SELECT: {
+                actions: [
+                  assign({
+                    minutes: (_, { input }) => Number(input),
+                  }),
+                ],
+                target: "meridiem",
+              },
+            },
+          },
+          meridiem: {
+            on: {
+              SELECT_MERIDIEM: {
+                actions: [
+                  assign({
+                    meridiem: (_, { input }) => input,
+                  }),
+                  send("DONE"),
+                ],
+              },
+            },
+          },
         },
       },
       visited: {
@@ -116,6 +175,7 @@ export const TimeMachine = Machine<TimeContext, TimeStateSchema, Events>(
         entry: ["onChange"],
         on: {
           FOCUS: "focussed",
+          TOGGLE_DROPDOWN: "dropdown",
         },
       },
       invalid: {

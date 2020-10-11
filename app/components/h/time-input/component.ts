@@ -13,6 +13,8 @@ interface HTimeInputArgs {
 
 const keysToAllow = ["Tab", "Shift", "ArrowLeft", "ArrowRight", "Backspace"];
 
+const MINUTES = [...Array(60).keys()];
+
 export default class HDateInput extends Component<HTimeInputArgs> {
   @use statechart = useMachine(TimeMachine)
     .withContext({
@@ -30,6 +32,15 @@ export default class HDateInput extends Component<HTimeInputArgs> {
   @matchesState("meridiem.focussed") meridiemFocussed!: boolean;
   @matchesState("minutes.focussed") minutesFocussed!: boolean;
   @matchesState("hours.focussed") hoursFocussed!: boolean;
+
+  @matchesState("dropdown.hours") dropdownHoursFocussed!: boolean;
+  @matchesState("dropdown.minutes") dropdownMinutesFocussed!: boolean;
+  @matchesState("dropdown.meridiem") dropdownMeridiemFocussed!: boolean;
+  @matchesState("dropdown") dropdownOpen!: boolean;
+
+  hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+  minutes = MINUTES;
 
   @action
   up() {
@@ -74,6 +85,21 @@ export default class HDateInput extends Component<HTimeInputArgs> {
   @action
   validate() {
     interpreterFor(this.statechart).send("VALIDATE");
+  }
+
+  @action
+  dropdown() {
+    interpreterFor(this.statechart).send({ type: "TOGGLE_DROPDOWN" });
+  }
+
+  @action
+  select(input: string) {
+    interpreterFor(this.statechart).send({ type: "SELECT", input });
+  }
+
+  @action
+  selectMeridiem(input: Meridiem) {
+    interpreterFor(this.statechart).send({ type: "SELECT_MERIDIEM", input });
   }
 
   @action
