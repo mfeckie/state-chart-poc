@@ -22,7 +22,7 @@ export default class HDateInput extends Component<HTimeInputArgs> {
 
   constructor(owner: any, args: HTimeInputArgs) {
     super(owner, args);
-    const incoming = DateTime.fromFormat(args.time, "hh:mm a");
+    const incoming = DateTime.fromFormat(args.time, "h:m a");
     if (incoming.isValid) {
       this.hours = incoming.hour;
       this.minutes = incoming.minute;

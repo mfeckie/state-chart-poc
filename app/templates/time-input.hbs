@@ -3,15 +3,33 @@
     Time Input
   </h2>
   <div>
-    <XStateInspector />
-    <div class="w-1/2">
-      <H::TimeInput @time={{this.time}} @onChange={{fn (mut this.time)}} />
+    <div class="container">
+      <XStateInspector />
+      <div class="w-1/2">
+        <H::TimeInput @time={{this.time}} @onChange={{fn (mut this.time)}} />
+      </div>
+
+      <div class="mt-10">
+        <label for="time">
+          Bound value:
+        </label>{{this.time}}
+      </div>
     </div>
 
-    <div class="mt-10">
-      <label for="time">
-        Bound value:
-      </label>{{this.time}}
+    <hr class="my-10" />
+    <div class="container">
+      <div class="w-1/2">
+        <H::TimeInput
+          @time={{this.otherTime}}
+          @onChange={{fn (mut this.otherTime)}}
+        />
+      </div>
+
+      <div class="mt-10">
+        <label for="time">
+          Bound value:
+        </label>{{this.otherTime}}
+      </div>
     </div>
   </div>
 </div>
