@@ -31,7 +31,7 @@ export default class HDateInput extends Component<HTimeInputArgs> {
   }
 
   @use statechart = interpreterFor(
-    useMachine(TimeMachine, { devTools: true })
+    useMachine(TimeMachine)
       .withContext({
         hours: this.hours,
         minutes: this.minutes,
