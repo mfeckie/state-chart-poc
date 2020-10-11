@@ -3,11 +3,11 @@ import { matchesState, useMachine, interpreterFor } from "ember-statecharts";
 import { Meridiem, TimeContext, TimeMachine } from "./time-machine";
 import { use } from "ember-usable";
 import Component from "@glimmer/component";
+import { DateTime } from "luxon";
+import { tracked } from "@glimmer/tracking";
 
 interface HTimeInputArgs {
-  hours: number;
-  minutes: number;
-  meridiem: Meridiem;
+  time: string;
   onChange: (time: string) => void;
 }
 
@@ -16,12 +16,26 @@ const keysToAllow = ["Tab", "Shift", "ArrowLeft", "ArrowRight", "Backspace"];
 const MINUTES = [...Array(60).keys()];
 
 export default class HDateInput extends Component<HTimeInputArgs> {
+  @tracked hours = 1;
+  @tracked minutes = 0;
+  @tracked meridiem = Meridiem.AM;
+
+  constructor(owner: any, args: HTimeInputArgs) {
+    super(owner, args);
+    const incoming = DateTime.fromFormat(args.time, "hh:mm a");
+    if (incoming.isValid) {
+      this.hours = incoming.hour;
+      this.minutes = incoming.minute;
+      this.meridiem = Meridiem[incoming.toFormat("a") as Meridiem];
+    }
+  }
+
   @use statechart = interpreterFor(
     useMachine(TimeMachine)
       .withContext({
-        hours: this.args.hours,
-        minutes: this.args.minutes,
-        meridiem: this.args.meridiem,
+        hours: this.hours,
+        minutes: this.minutes,
+        meridiem: this.meridiem,
       })
       .withConfig({
         actions: {
@@ -40,9 +54,9 @@ export default class HDateInput extends Component<HTimeInputArgs> {
   @matchesState("dropdown.meridiem") dropdownMeridiemFocussed!: boolean;
   @matchesState("dropdown") dropdownOpen!: boolean;
 
-  hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-  minutes = MINUTES;
+  minuteOptions = MINUTES;
 
   @action
   up() {

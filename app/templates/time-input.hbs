@@ -1,11 +1,17 @@
-<h2>
-  Time Input
-</h2>
-<div>
-  <XStateInspector />
-  <H::TimeInput @time={{this.time}} @onChange={{fn (mut this.time)}} />
+<div class="container pt-10">
+  <h2 class="mb-10">
+    Time Input
+  </h2>
+  <div>
+    <XStateInspector />
+    <div class="w-1/2">
+      <H::TimeInput @time={{this.time}} @onChange={{fn (mut this.time)}} />
+    </div>
 
-  <hr />
-
-  <label for="time">Passed in value: </label>{{this.time}}
+    <div class="mt-10">
+      <label for="time">
+        Bound value:
+      </label>{{this.time}}
+    </div>
+  </div>
 </div>

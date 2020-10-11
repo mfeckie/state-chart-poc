@@ -1,10 +1,7 @@
 <div ...attributes>
-  <label for="hours">
-    Hours
-  </label>
   <input
     placeholder="HH"
-    class={{if this.hoursFocussed "has-focus"}}
+    class="{{if this.hoursFocussed "has-focus"}} w-10 border text-center"
     type="text"
     value={{this.statechart.state.context.hours}}
     {{on "focus" this.focus}}
@@ -18,19 +15,19 @@
   />
   {{#if this.dropdownHoursFocussed}}
     <div class="dropdown">
-      {{#each this.hours as |hour|}}
+      {{#each this.hourOptions as |hour|}}
         <button type="button" {{on "click" (fn this.select hour)}}>
           {{hour}}
         </button>
       {{/each}}
     </div>
   {{/if}}
-  <span>
+  <span class="px-1">
     :
   </span>
   <input
     placeholder="MM"
-    class={{if this.minutesFocussed "has-focus"}}
+    class="{{if this.minutesFocussed "has-focus"}} w-10 border text-center"
     type="text"
     value={{this.paddedMinutes}}
     {{on "focus" this.focus}}
@@ -44,7 +41,7 @@
   />
   {{#if this.dropdownMinutesFocussed}}
     <div class="dropdown">
-      {{#each this.minutes as |minute|}}
+      {{#each this.minuteOptions as |minute|}}
         <button type="button" {{on "click" (fn this.select minute)}}>
           {{minute}}
         </button>
@@ -55,7 +52,7 @@
   </span>
   <input
     placeholder="AM/PM"
-    class={{if this.meridiemFocussed "has-focus"}}
+    class="{{if this.meridiemFocussed "has-focus"}} w-10 border text-center"
     type="text"
     value={{this.statechart.state.context.meridiem}}
     {{on "focus" this.focus}}
@@ -75,7 +72,11 @@
       </button>
     </div>
   {{/if}}
-  <button type="button" {{on "click" this.dropdown}}>
+  <button
+    class="bg-blue-500 text-white py-2 px-4"
+    type="button"
+    {{on "click" this.dropdown}}
+  >
     Dropdown
   </button>
 </div>

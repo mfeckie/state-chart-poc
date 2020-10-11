@@ -1,6 +1,6 @@
 import Controller from "@ember/controller";
-import { tracked } from '@glimmer/tracking';
+import { tracked } from "@glimmer/tracking";
 
 export default class TimeInput extends Controller {
-  @tracked time = 'abc123';
+  @tracked time = "11:40 AM";
 }
