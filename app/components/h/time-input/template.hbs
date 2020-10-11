@@ -1,9 +1,10 @@
-<div>
+<div ...attributes>
   <label for="hours">
     Hours
   </label>
   <input
-    class={{if this.focussed "has-focus"}}
+    placeholder="HH"
+    class={{if this.hoursFocussed "has-focus"}}
     type="text"
     value={{this.statechart.state.context.hours}}
     {{on "focus" this.focus}}
@@ -15,14 +16,14 @@
     {{on "blur" this.blur}}
     {{on "input" this.input}}
   />
-
-  <label for="minutes">
-    Minutes
-  </label>
+  <span>
+    :
+  </span>
   <input
-    class={{if this.focussed "has-focus"}}
+    placeholder="MM"
+    class={{if this.minutesFocussed "has-focus"}}
     type="text"
-    value={{this.statechart.state.context.minutes}}
+    value={{this.paddedMinutes}}
     {{on "focus" this.focus}}
     {{on "focus" this.focusMinutes}}
     {{on-key "ArrowUp" this.up}}
@@ -32,12 +33,11 @@
     {{on "blur" this.blur}}
     {{on "input" this.input}}
   />
-
-  <label for="meridiem">
-    AM/PM
-  </label>
+  <span>
+  </span>
   <input
-    class={{if this.focussed "has-focus"}}
+    placeholder="AM/PM"
+    class={{if this.meridiemFocussed "has-focus"}}
     type="text"
     value={{this.statechart.state.context.meridiem}}
     {{on "focus" this.focus}}
@@ -47,4 +47,7 @@
     {{on "blur" this.blur}}
     {{on "input" this.input}}
   />
+  <button type="button">
+    Dropdown
+  </button>
 </div>
